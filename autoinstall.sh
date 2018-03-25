@@ -33,3 +33,4 @@ echo -e "${LB}        "$substep")${NC} Ready to install" ; substep="$(echo $subs
 echo -e ""
 read -t 5 -p "Do you wish to begin the installation? [Y/n]" begin
 [[ -z $begin || ${begin,,} == "y" ]] || exit && sh /tmp/MediaServer/media_server.sh
+rm -rf /tmp/MediaServer/
