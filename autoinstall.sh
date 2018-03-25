@@ -32,4 +32,4 @@ git clone https://github.com/IFeelFine/MediaServer.git --quiet
 echo -e "${LB}        "$substep")${NC} Ready to install" ; substep="$(echo $substep | tr '[a-y]z' '[b-z]a')"
 echo -e ""
 read -t 5 -p "Do you wish to begin the installation? [Y/n]" begin
-[[ -z $begin || ${begin,,} == "y" ]] || exit && cd MediaServer && sh ./media_server.sh
+[[ -z $begin || ${begin,,} == "y" ]] || exit && sh /tmp/MediaServer/media_server.sh
