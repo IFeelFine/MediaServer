@@ -7,13 +7,13 @@
 # Notes			: 
 #====================================================================
 
-. functions/update_system.sh
-. functions/install_plexmediaserver.sh
-. functions/install_sonarr.sh
-. functions/install_radarr.sh
-. functions/install_jackett.sh
-. functions/install_rtorrent.sh
-. functions/install_tautulli.sh
+. /tmp/MediaServer/functions/update_system.sh
+. /tmp/MediaServer/functions/install_plexmediaserver.sh
+. /tmp/MediaServer/functions/install_sonarr.sh
+. /tmp/MediaServer/functions/install_radarr.sh
+. /tmp/MediaServer/functions/install_jackett.sh
+. /tmp/MediaServer/functions/install_rtorrent.sh
+. /tmp/MediaServer/functions/install_tautulli.sh
 
 check_continue() {
 install_continue="N"
