@@ -6,6 +6,16 @@
 # Date			: 3/24/2018
 # Notes			: 
 #====================================================================
+# Set colours & other vars
+RED='\033[1;31m'	# Bold red
+LB='\033[1;36m'		# Bold blue
+DB='\033[36m'		# Dark blue
+YB='\033[1;33m'		# Bold yellow
+BU='\033[34;4m'		# Purple underline
+LG='\033[37m'		# Light gray
+LU='\033[37;1;4m'	# Light gray underlined
+NC='\033[0m'		# No Color
+
 install_sonarr () {
 	step=$((step+1)); substep=a
 	service_name="sonarr"
@@ -29,7 +39,7 @@ install_sonarr () {
     # Download, extract, & move sonarr
 	echo "${LB}        "$substep")${NC} Installing Sonarr" ; substep="$(echo $substep | tr '[a-y]z' '[b-z]a')"
     cd /tmp
-    wget http://download.sonarr.tv/v2/master/mono/NzbDrone.master.tar.gz -quiet
+    wget http://download.sonarr.tv/v2/master/mono/NzbDrone.master.tar.gz --quiet
     tar -xzf NzbDrone* -C .
     mkdir -p /opt/$service_name/bin
     mv NzbDrone/* /opt/$service_name/bin

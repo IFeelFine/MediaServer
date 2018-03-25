@@ -9,19 +9,13 @@
 
 # Set colours
 RED='\033[1;31m'	# Bold red
-LB='\033[1;36m'		# Bold blue
-DB='\033[36m'		# Dark blue
-YB='\033[1;33m'		# Bold yellow
-BU='\033[34;4m'		# Purple underline
-LG='\033[37m'		# Light gray
-LU='\033[37;1;4m'	# Light gray underlined
 NC='\033[0m'		# No Color
 
 step=0 				# Set the step number
 do_continue=1		# Continue after each step (0 = prompt, !0 = automatic)
 
 # Check if we're root
-[ "$EUID" -ne 0 ] && { sudo -s || { echo -e "${RED}ERROR:${NC} This script must be run as root!\n       Change users and try again."; exit 1; } }
+[ "$EUID" -ne 0 ] && { echo -e "${RED}ERROR:${NC} This script must be run as root!\n       Change users and try again."; exit 1; }
 # Check Internet
 [ `ping -q -c 1 -W 1 github.com >/dev/null; echo $?` -ne 0 ] && { echo -e "${RED}ERROR:${NC} You must be connected to the Internet to execute this script!\n       Connect to the Internet and try again."; exit 1; }
 

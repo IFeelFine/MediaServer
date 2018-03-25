@@ -6,6 +6,15 @@
 # Date			: 3/24/2018
 # Notes			: 
 #====================================================================
+# Set colours & other vars
+RED='\033[1;31m'	# Bold red
+LB='\033[1;36m'		# Bold blue
+DB='\033[36m'		# Dark blue
+YB='\033[1;33m'		# Bold yellow
+BU='\033[34;4m'		# Purple underline
+LG='\033[37m'		# Light gray
+LU='\033[37;1;4m'	# Light gray underlined
+NC='\033[0m'		# No Color
 
 update_system () {
 	step=$((step+1)); substep=a

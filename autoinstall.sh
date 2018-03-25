@@ -20,7 +20,7 @@ substep=a
 echo -e "${BU}Installing I Feel Fine Media Server...${NC}"
 
 # Check if we're root
-[ "$EUID" -ne 0 ] && { sudo -s || { echo -e "${RED}ERROR:${NC} This script must be run as root!\n       Change users and try again."; exit 1; } }
+[ "$EUID" -ne 0 ] && { echo -e "${RED}ERROR:${NC} This script must be run as root!\n       Change users and try again."; exit 1; } 
 # Check Internet
 [ `ping -q -c 1 -W 1 github.com >/dev/null; echo $?` -ne 0 ] && { echo -e "${RED}ERROR:${NC} You must be connected to the Internet to execute this script!\n       Connect to the Internet and try again."; exit 1; }
 
