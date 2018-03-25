@@ -17,19 +17,19 @@ LU='\033[37;1;4m'	# Light gray underlined
 NC='\033[0m'		# No Color
 substep=a
 
-echo "${BU}Installing I Feel Fine Media Server...${NC}"
+echo -e "${BU}Installing I Feel Fine Media Server...${NC}"
 
 # Check if we're root
-[ "$EUID" -ne 0 ] && sudo -s ||	{ echo -e "${RED}ERROR:${NC}This script must be run as root!\nPlease run it again as root."; exit 1 }
+[ "$EUID" -ne 0 ] && { sudo -s || { echo -e "${RED}ERROR:${NC} This script must be run as root!\n       Change users and try again."; exit 1; } }
 # Check Internet
-[ ping -q -c 1 -W 1 github.com >/dev/null ] { echo -e "${RED}ERROR:${NC}You must be connected to the Internet to execute this script\nConnect to the Internet and try again."}
+[ `ping -q -c 1 -W 1 github.comd >/dev/null; echo $?` -ne 0 ] && { echo -e "${RED}ERROR:${NC} You must be connected to the Internet to execute this script!\n       Connect to the Internet and try again."; exit 1; }
 
-echo "${LB}        "$substep")${NC} Installing dependencies" ; substep="$(echo $substep | tr '[a-y]z' '[b-z]a')"
+echo -e "${LB}        "$substep")${NC} Installing dependencies" ; substep="$(echo $substep | tr '[a-y]z' '[b-z]a')"
 yum install -y git-core 
 cd /tmp/
-echo "${LB}        "$substep")${NC} Copying Files" ; substep="$(echo $substep | tr '[a-y]z' '[b-z]a')"
+echo -e "${LB}        "$substep")${NC} Copying Files" ; substep="$(echo $substep | tr '[a-y]z' '[b-z]a')"
 git clone https://github.com/IFeelFine/MediaServer.git --quiet
-echo "${LB}        "$substep")${NC} Ready to install" ; substep="$(echo $substep | tr '[a-y]z' '[b-z]a')"
-echo ""
+echo -e "${LB}        "$substep")${NC} Ready to install" ; substep="$(echo $substep | tr '[a-y]z' '[b-z]a')"
+echo -e ""
 read -t 5 -p "Do you wish to begin the installation? [Y/n]" begin
-[[ -z $begin || echo $begin | grep -qi 'y' ]] || exit && sh /tmp/MediaServer/media_server.sh
+[[ -z $begin || ${begin,,} == "y" ]] || exit && cd MediaServer && sh ./media_server.sh
