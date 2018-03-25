@@ -18,7 +18,7 @@ LU='\033[37;1;4m'	# Light gray underlined
 NC='\033[0m'		# No Color
 
 step=0 				# Set the step number
-do_continue=1		# Continue after each step (0 = prompt, 1 = automatic)
+do_continue=1		# Continue after each step (0 = prompt, !0 = automatic)
 
 # Check if we're root
 [ "$EUID" -ne 0 ] && sudo -s ||	{ echo -e "${RED}ERROR:${NC}This script must be run as root!\nPlease run it again as root."; exit 1 }
