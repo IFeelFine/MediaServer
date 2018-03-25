@@ -16,7 +16,7 @@ install_radarr () {
 	echo "${LB}        "$substep")${NC} Installing Radarr" ; substep="$(echo $substep | tr '[a-y]z' '[b-z]a')"
 	cd /tmp
     curl -L -O $( curl -s https://api.github.com/repos/Radarr/Radarr/releases | grep linux.tar.gz | grep browser_download_url | head -1 | cut -d \" -f 4 ) 2>&1
-    tar -xf Radarr.develop.*.linux.tar.gz &; spinner
+    tar -xf Radarr.develop.*.linux.tar.gz & ; spinner
 	mkdir /opt/$service_name
 	mv Radarr/* /opt/$service_name
 	rm -rf Radarr*
