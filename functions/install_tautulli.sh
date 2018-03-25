@@ -13,7 +13,8 @@ install_tautulli () {
 	echo "${BU}"$step". Installing Jackett...${NC}"
 	
 	echo "${LB}        "$substep")${NC} Installing dependencies" ; substep="$(echo $substep | tr '[a-y]z' '[b-z]a')"
-	yum install -y python & >/dev/null 2>&1; spinner
+	yum install -y python & >/dev/null 2>&1
+	spinner
 	
 	echo "${LB}        "$substep")${NC} Installing Radarr" ; substep="$(echo $substep | tr '[a-y]z' '[b-z]a')"
 	cd /opt/ && git clone https://github.com/Tautulli/Tautulli.git

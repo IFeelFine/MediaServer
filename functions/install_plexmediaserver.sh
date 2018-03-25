@@ -25,7 +25,8 @@ EOF
 
     # Install Plex Media Server
 	echo "${LB}        "$substep")${NC} Installing Plex" ; substep="$(echo $substep | tr '[a-y]z' '[b-z]a')"
-    yum install -y plexmediaserver & 2>&1 >/dev/null; spinner
+    yum install -y plexmediaserver & 2>&1 >/dev/null 
+    spinner
 
 # Create firewalld service
 	echo "${LB}        "$substep")${NC} Adding firewalld rules" ; substep="$(echo $substep | tr '[a-y]z' '[b-z]a')"

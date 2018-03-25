@@ -14,10 +14,13 @@ install_sonarr () {
 		
 	# Install required repos and packages
 	echo "${LB}        "$substep")${NC} Installing dependencies" ; substep="$(echo $substep | tr '[a-y]z' '[b-z]a')"
-    yum install epel-release yum-utils -y & >/dev/null 2>&1; spinner
+    yum install epel-release yum-utils -y & >/dev/null 2>&1 
+    spinner
     rpm --import "http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF" 2>&1
-    yum-config-manager --add-repo http://download.mono-project.com/repo/centos/ & >/dev/null 2>&1; spinner
-    yum -y install wget mediainfo libzen libmediainfo curl gettext mono-core mono-devel mono-locale-extras sqlite.x86_64 git par2cmdline p7zip unzip tar gcc python-feedparser python-configobj python-cheetah python-dbus python-devel libxslt-devel & >/dev/null 2>&1; spinner
+    yum-config-manager --add-repo http://download.mono-project.com/repo/centos/ & >/dev/null 2>&1
+    spinner
+    yum -y install wget mediainfo libzen libmediainfo curl gettext mono-core mono-devel mono-locale-extras sqlite.x86_64 git par2cmdline p7zip unzip tar gcc python-feedparser python-configobj python-cheetah python-dbus python-devel libxslt-devel & >/dev/null 2>&1
+    spinner
  
     # Add a user for sonarr to use
 	echo "${LB}        "$substep")${NC} Adding $service_name user" ; substep="$(echo $substep | tr '[a-y]z' '[b-z]a')"
