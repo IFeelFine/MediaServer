@@ -46,9 +46,9 @@ configure_nginx_rutorrent () {
 		
     mkdir /etc/nginx/sites-available /etc/nginx/sites-enabled	
 	mv nginx.conf nginx.conf.default
-    wget https://raw.githubusercontent.com/IFeelFine/Media-Server-Installer/master/config/nginx/nginx.conf --quiet
+    wget https://raw.githubusercontent.com/IFeelFine/MediaServer/master/config/nginx/nginx.conf --quiet -P /etc/nginx/
     
-	wget https://raw.githubusercontent.com/IFeelFine/Media-Server-Installer/master/config/nginx/sites-available/rutorrent.conf --quiet -P /etc/nginx/sites-available/
+	wget https://raw.githubusercontent.com/IFeelFine/MediaServer/master/config/nginx/sites-available/rutorrent.conf --quiet -P /etc/nginx/sites-available/
 	
 	echo "${YB}ruTorrent user information${NC}"	
 	read -t 10 -p "What will be the username to access to ruTorrent? [rutorrent]" rutorrent_user_temp
