@@ -8,9 +8,9 @@ This installer has been tested on CentOS 7. CentOS 6 calls are very different (i
 ##
 CentOS media server installation scripts. Includes Plex Media Server, Sonarr, Radarr, rTorrent, ruTorrent, Jackett, &amp; Tautulli
 
-[x] CentOS 7.4
-[ ] CentOS 6.x
-[ ] Ubuntu (see Punk--Rock's script [here](https://github.com/Punk--Rock/Seedbox-installer/))
+* [x] CentOS 7.4
+* [ ] CentOS 6.x
+* [ ] Ubuntu (see Punk--Rock's script [here](https://github.com/Punk--Rock/Seedbox-installer/))
 
 ## Services
 
@@ -33,8 +33,8 @@ wget -O - https://raw.githubusercontent.com/IFeelFine/MediaServer/master/autoins
 - Refine SELinux security contexts
 
 ## License
-Copyright (c)2018 I Feel Fine Inc.
+Copyright (c)2018 I Feel Fine Inc. 
 [MIT License](https://opensource.org/licenses/MIT)
 
 ## Contact
-[![](https://png.icons8.com/metro/50/000000/twitter.png)(https://twitter.com/imdebating/)] [@imdebating](https://twitter.com/imdebating)
+[![twitter](https://png.icons8.com/metro/50/000000/twitter.png)](https://twitter.com/imdebating/)[@imdebating](https://twitter.com/imdebating)
