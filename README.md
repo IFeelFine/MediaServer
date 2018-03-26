@@ -37,4 +37,4 @@ Copyright (c)2018 I Feel Fine Inc.
 [MIT License](https://opensource.org/licenses/MIT)
 
 ## Contact
-![](https://png.icons8.com/metro/50/000000/twitter.png)(https://twitter.com/imdebating/) [@imdebating](https://twitter.com/imdebating
+[![](https://png.icons8.com/metro/50/000000/twitter.png)(https://twitter.com/imdebating/)] [@imdebating](https://twitter.com/imdebating)
