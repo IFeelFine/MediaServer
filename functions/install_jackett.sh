@@ -59,7 +59,7 @@ User=$service_name
 Group=$service_name
 
 Type=simple
-ExecStart=/usr/bin/mono --debug /opt/$service_name/JackettConsole.exe -nobrowser -data /opt/$service_name
+ExecStart=/usr/bin/mono /opt/$service_name/JackettConsole.exe -nobrowser -data /opt/$service_name
 TimeoutStopSec=20
 KillMode=process
 Restart=on-failure

@@ -1,12 +1,9 @@
 # Media Server [![Build Status](https://travis-ci.org/IFeelFine/MediaServer.svg?branch=master)](https://travis-ci.org/IFeelFine/MediaServer)
 
-This is a set of functions to install a media server within CentOS7. SELinux is enforcing, and this setup uses systemd for all services.
+This is a set of functions to install a media server within CentOS 7. SELinux is enforcing, and this setup uses systemd for all services.
 
 ## Compatability
-This installer has been tested on CentOS 7. CentOS 6 calls are very different (including the use of firewalld in Centos 7)
-
-##
-CentOS media server installation scripts. Includes Plex Media Server, Sonarr, Radarr, rTorrent, ruTorrent, Jackett, &amp; Tautulli
+This installer has been tested on CentOS 7.4. CentOS 6 calls are very different (including the use of firewalld in Centos 7)
 
 * [x] CentOS 7.4
 * [ ] CentOS 6.x
