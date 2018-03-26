@@ -127,8 +127,11 @@ EOF
 
 configure_rtorrent_service () {
 	step=$((step+1)); substep=a
+	service=http
 	echo -e "${BU}"$step". Configuring rTorrent service..."
 
+	echo -e "${LB}        "$substep")${NC} Adding firewalld rules" ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
+   	update_firewall
 	echo -e "${LB}        "$substep")${NC} Starting the service" ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
     tee /usr/lib/systemd/system/rtorrent.service ${tolog} << EOF
 [Unit]
@@ -149,8 +152,7 @@ WantedBy=multi-user.target
 EOF
     
 	# Enable and start the Service
-    systemctl is-active $service_name ${tolog} || systemctl start $service_name ${tolog}
-    systemctl is-active $service_name ${tolog} && { systemctl is-enabled $service_name ${tolog} || systemctl enable $service_name ${tolog} || { echo -e "${RED}ERROR: ${NC}Failed to start and enable the $service_name service. Exiting...";  exit 1; } }
+	update_service
 
 	echo -e "${BU}Step "$step" complete.${NC}"
 	echo -e ""
