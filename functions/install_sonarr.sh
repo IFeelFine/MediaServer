@@ -16,10 +16,10 @@ install_sonarr () {
 		
 	# Install required repos and packages
 	echo -e "${LB}        "$substep")${NC} Installing dependencies" ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
-    yum install epel-release yum-utils -y ${tolog} 
+    yum install epel-release yum-utils -y 
     rpm --import "http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF" 2>&1
-    yum-config-manager --add-repo http://download.mono-project.com/repo/centos/ ${tolog} 
-    yum -y install wget mediainfo libzen libmediainfo curl gettext mono-core mono-devel mono-locale-extras sqlite.x86_64 git par2cmdline p7zip unzip tar gcc python-feedparser python-configobj python-cheetah python-dbus python-devel libxslt-devel ${tolog} 
+    yum-config-manager --add-repo http://download.mono-project.com/repo/centos/ 
+    yum -y install wget mediainfo libzen libmediainfo curl gettext mono-core mono-devel mono-locale-extras sqlite.x86_64 git par2cmdline p7zip unzip tar gcc python-feedparser python-configobj python-cheetah python-dbus python-devel libxslt-devel 
  
     # Download, extract, & move sonarr
 	echo -e "${LB}        "$substep")${NC} Installing Sonarr" ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
@@ -32,14 +32,14 @@ install_sonarr () {
     
     # Add a user for sonarr to use
 	echo -e "${LB}        "$substep")${NC} Adding $service_name user" ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
-    useradd $service_name -s /sbin/nologin ${tolog}
+    useradd $service_name -s /sbin/nologin
     
     # Change ownership of the install directory
-    chown -R $service_name: /opt/$service_name ${tolog}
+    chown -R $service_name: /opt/$service_name
     
     # Create firewalld service
 	echo -e "${LB}        "$substep")${NC} Adding firewalld rules" ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
-    tee /etc/firewalld/services/$service_name.xml ${tolog} << EOF
+    tee /etc/firewalld/services/$service_name.xml << EOF
 <service>
   <short>$service_name</short>
   <description>Sonarr Download Service</description>
@@ -52,7 +52,7 @@ EOF
     
     # Create systemd unit file
 	echo -e "${LB}        "$substep")${NC} Starting the service" ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
-    tee /lib/systemd/system/$service_name.service ${tolog} << EOF
+    tee /lib/systemd/system/$service_name.service << EOF
 [Unit]
 Description=Sonarr Daemon
 After=syslog.target network.target

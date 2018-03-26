@@ -30,12 +30,12 @@ fi
 }
 
 update_firewall () {    
-    systemctl is-active firewalld ${tolog} || systemctl start firewalld ${tolog}
-    firewall-cmd --permanent --add-service $service_name ${tolog} 
-    firewall-cmd --reload ${tolog}
+    systemctl is-active firewalld || systemctl start firewalld
+    firewall-cmd --permanent --add-service $service_name 
+    firewall-cmd --reload
 }
 
 update_service () {
-    systemctl is-active $service_name ${tolog} || systemctl start $service_name ${tolog}
-    systemctl is-active $service_name ${tolog} && { systemctl is-enabled $service_name ${tolog} || systemctl enable $service_name ${tolog} || { echo -e "${RED}ERROR: ${NC}Failed to start and enable the $service_name service. Exiting...";  exit 1; } }
+    systemctl is-active $service_name || systemctl start $service_name
+    systemctl is-active $service_name && { systemctl is-enabled $service_name || systemctl enable $service_name || { echo -e "${RED}ERROR: ${NC}Failed to start and enable the $service_name service. Exiting...";  exit 1; } }
 }

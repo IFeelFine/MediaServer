@@ -15,7 +15,7 @@ install_tautulli () {
 	echo -e "${BU}"$step". Installing Jackett...${NC}"
 	
 	echo -e "${LB}        "$substep")${NC} Installing dependencies" ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
-	yum install -y python ${tolog} 
+	yum install -y python 
 	spinner
 	
 	echo -e "${LB}        "$substep")${NC} Installing Radarr" ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
@@ -24,13 +24,13 @@ install_tautulli () {
 	
     # Add a user for the app to use
 	echo -e "${LB}        "$substep")${NC} Adding $service_name user" ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
-    adduser -s /sbin/nologin $service_name ${tolog}
+    adduser -s /sbin/nologin $service_name
 
-	chown -R tautulli: /opt/Tautulli ${tolog}
+	chown -R tautulli: /opt/Tautulli
 	
     # Create firewalld service
 	echo -e "${LB}        "$substep")${NC} Adding firewalld rules" ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
-    tee /etc/firewalld/services/$service_name.xml ${tolog} << EOF
+    tee /etc/firewalld/services/$service_name.xml << EOF
 <service>
   <short>https://github.com/Tautulli/Tautulli/archive/master.zip</short>
   <description>Monitoring tool for Plex Media Servere</description>
@@ -43,7 +43,7 @@ EOF
     
 	# Enable and start the Service
 	echo -e "${LB}        "$substep")${NC} Starting the service" ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
-	tee /lib/systemd/system/$service_name.service ${tolog} << EOF
+	tee /lib/systemd/system/$service_name.service << EOF
 [Unit]
 Description=Tautulli - Stats for Plex Media Server usage
 

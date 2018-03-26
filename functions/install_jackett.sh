@@ -14,11 +14,11 @@ install_jackett () {
 	echo -e "${BU}"$step". Installing Jackett...${NC}"
 	
 	echo -e "${LB}        "$substep")${NC} Installing dependencies" ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
-	yum install -y mono-locale-extras ca-certificates-mono libcurl-devel bzip2 mono-devel ${tolog} 
+	yum install -y mono-locale-extras ca-certificates-mono libcurl-devel bzip2 mono-devel 
 	
 	echo -e "${LB}        "$substep")${NC} Installing Jackett" ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
 	cd /tmp/
-    curl -L -O $( curl -s https://api.github.com/repos/Jackett/Jackett/releases | grep Mono.tar.gz | grep browser_download_url | head -1 | cut -d \" -f 4 ) ${tolog} 
+    curl -L -O $( curl -s https://api.github.com/repos/Jackett/Jackett/releases | grep Mono.tar.gz | grep browser_download_url | head -1 | cut -d \" -f 4 ) 
     tar -xf Jackett* 
 	mkdir -p /opt/$service_name
 	mv Jackett/* /opt/$service_name
@@ -26,14 +26,14 @@ install_jackett () {
 
     # Add a user for the app to use
 	echo -e "${LB}        "$substep")${NC} Adding $service_name user" ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
-    useradd $service_name -s /sbin/nologin ${tolog}
+    useradd $service_name -s /sbin/nologin
 	
     # Change ownership of the install directory
-    chown -R $service_name: /opt/$service_name ${tolog}
+    chown -R $service_name: /opt/$service_name
     
     # Create firewalld service
 	echo -e "${LB}        "$substep")${NC} Adding firewalld rules" ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
-    tee /etc/firewalld/services/$service_name.xml ${tolog} << EOF
+    tee /etc/firewalld/services/$service_name.xml << EOF
 <service>
   <short>$service_name</short>
   <description>Jackett Indexing Service</description>
@@ -46,7 +46,7 @@ EOF
     
     # Create systemd unit file
 	echo -e "${LB}        "$substep")${NC} Starting the service" ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
-    tee /lib/systemd/system/$service_name.service ${tolog} << EOF
+    tee /lib/systemd/system/$service_name.service << EOF
 [Unit]
 Description=Jackett Daemon
 After=syslog.target network.target

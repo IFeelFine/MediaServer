@@ -15,7 +15,7 @@ install_plexmediaserver () {
 
     # Add the Plex repository for yum updates
 	echo -e "${LB}        "$substep")${NC} Adding Plex repository for yum" ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
-    tee /etc/yum.repos.d/plex.repo ${tolog} << EOF
+    tee /etc/yum.repos.d/plex.repo << EOF
 [PlexRepo]
 name=PlexRepo
 baseurl=https://downloads.plex.tv/repo/rpm/\$basearch/
@@ -26,12 +26,12 @@ EOF
 
     # Install Plex Media Server
 	echo -e "${LB}        "$substep")${NC} Installing Plex" ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
-    yum install -y plexmediaserver ${tolog}  
+    yum install -y plexmediaserver  
     spinner
 
 # Create firewalld service
 	echo -e "${LB}        "$substep")${NC} Adding firewalld rules" ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
-tee /etc/firewalld/services/$service_name.xml ${tolog} << EOF
+tee /etc/firewalld/services/$service_name.xml << EOF
 <service>
   <short>plex</short>
   <description>Plex Media Server</description>

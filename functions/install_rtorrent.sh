@@ -20,14 +20,14 @@ install_rtorrent_rutorrent () {
     wget http://rpms.remirepo.net/enterprise/remi-release-7.rpm --quiet
     rpm -Uvh remi-release-7.rpm epel-release-latest-7.noarch.rpm --quiet
 
-    yum install -y yum-utils ${tolog} 
-    yum-config-manager --enable remi-php72 ${tolog} 
+    yum install -y yum-utils 
+    yum-config-manager --enable remi-php72 
 	
 	#Install required packages
 	echo -e "${LB}        "$substep")${NC} Installing rTorrent" ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
-	rpm -Uvh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm ${tolog} 
+	rpm -Uvh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm 
 
-	yum install -y libtool screen nginx php php-fpm php-cli php-curl php-geoip php-xmlrpc mediainfo rtorrent ${tolog} 
+	yum install -y libtool screen nginx php php-fpm php-cli php-curl php-geoip php-xmlrpc mediainfo rtorrent 
  
 	[ -d "/var/www/html/" ] && cd /var/www/html/ || { mkdir -p /var/www/html/; cd /var/www/html; }
 	
@@ -63,8 +63,8 @@ configure_nginx_rutorrent () {
 	chmod 400 /var/www/html/rutorrent/.htpasswd
 				
 	echo -e "${LB}        "$substep")${NC} Starting the service" ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
-	systemctl restart nginx ${tolog} && systemctl is-enabled $service_name ${tolog} || systemctl enable nginx ${tolog}
-	systemctl restart php-fpm ${tolog} && systemctl is-enabled $service_name ${tolog} || systemctl enable php-fpm ${tolog}
+	systemctl restart nginx && systemctl is-enabled $service_name || systemctl enable nginx
+	systemctl restart php-fpm && systemctl is-enabled $service_name || systemctl enable php-fpm
 		
 	echo -e "${BU}Step "$step" complete.${NC}"
 	echo -e ""
@@ -77,7 +77,7 @@ configure_user_rtorrent_rutorrent () {
 	useradd $rutorrent_user
 	[ -d "/home/$rutorrent_user/" ] || mkdir -p /home/$rutorrent_user/
 	mkdir /home/$rutorrent_user/torrents /home/$rutorrent_user/watch /home/$rutorrent_user/.session
-	tee /home/$rutorrent_user/.rtorrent.rc ${tolog} << EOF 
+	tee /home/$rutorrent_user/.rtorrent.rc << EOF 
 scgi_port = 127.0.0.1:5001
 encoding_list = UTF-8
 port_range = 45000-65000
@@ -100,10 +100,10 @@ execute = {sh,-c,/usr/bin/php /var/www/html/rutorrent/php/initplugins.php $rutor
 schedule = espace_disque_insuffisant,1,30,close_low_diskspace=10240M" 
 EOF
 
-	chown -R $rutorrent_user: /home/$rutorrent_user/ ${tolog}
+	chown -R $rutorrent_user: /home/$rutorrent_user/
 			
 	mkdir /var/www/html/rutorrent/conf/users/$rutorrent_user/ 
-	tee /var/www/html/rutorrent/conf/users/$rutorrent_user/config.php ${tolog} << EOF 
+	tee /var/www/html/rutorrent/conf/users/$rutorrent_user/config.php << EOF 
 <?php
 \$pathToExternals['curl'] = '/usr/bin/curl';
 \$topDirectory = '/home/$rutorrent_user';
@@ -127,7 +127,7 @@ configure_rtorrent_service () {
 	echo -e "${LB}        "$substep")${NC} Adding firewalld rules" ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
    	update_firewall
 	echo -e "${LB}        "$substep")${NC} Starting the service" ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
-    tee /usr/lib/systemd/system/rtorrent.service ${tolog} << EOF
+    tee /usr/lib/systemd/system/rtorrent.service << EOF
 [Unit]
 Description=rTorrent Service
 After=network.target
