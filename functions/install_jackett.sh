@@ -14,12 +14,11 @@ install_jackett () {
 	echo -e "${BU}"$step". Installing Jackett...${NC}"
 	
 	echo -e "${LB}        "$substep")${NC} Installing dependencies" ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
-	yum install -y mono-locale-extras ca-certificates-mono libcurl-devel bzip2 mono-devel ${tolog} &
-	spinner
+	yum install -y mono-locale-extras ca-certificates-mono libcurl-devel bzip2 mono-devel ${tolog} 
 	
 	echo -e "${LB}        "$substep")${NC} Installing Jackett" ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
 	cd /tmp/
-    curl -L -O $( curl -s https://api.github.com/repos/Jackett/Jackett/releases | grep Mono.tar.gz | grep browser_download_url | head -1 | cut -d \" -f 4 ) ${tolog} &
+    curl -L -O $( curl -s https://api.github.com/repos/Jackett/Jackett/releases | grep Mono.tar.gz | grep browser_download_url | head -1 | cut -d \" -f 4 ) ${tolog} 
     tar -xf Jackett* 
 	mkdir -p /opt/$service_name
 	mv Jackett/* /opt/$service_name

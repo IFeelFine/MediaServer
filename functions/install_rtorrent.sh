@@ -20,27 +20,21 @@ install_rtorrent_rutorrent () {
     wget http://rpms.remirepo.net/enterprise/remi-release-7.rpm --quiet
     rpm -Uvh remi-release-7.rpm epel-release-latest-7.noarch.rpm --quiet
 
-    yum install -y yum-utils ${tolog} &
-    spinner
-    yum-config-manager --enable remi-php72 ${tolog} &
-    spinner
+    yum install -y yum-utils ${tolog} 
+    yum-config-manager --enable remi-php72 ${tolog} 
 	
 	#Install required packages
 	echo -e "${LB}        "$substep")${NC} Installing rTorrent" ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
-	rpm -Uvh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm ${tolog} &
-	spinner
+	rpm -Uvh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm ${tolog} 
 
-	yum install -y libtool screen nginx php php-fpm php-cli php-curl php-geoip php-xmlrpc mediainfo rtorrent ${tolog} &
-	spinner
+	yum install -y libtool screen nginx php php-fpm php-cli php-curl php-geoip php-xmlrpc mediainfo rtorrent ${tolog} 
  
 	[ -d "/var/www/html/" ] && cd /var/www/html/ || { mkdir -p /var/www/html/; cd /var/www/html; }
 	
 	echo -e "${LB}        "$substep")${NC} Installing ruTorrent" ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
-	git clone https://github.com/Novik/ruTorrent.git rutorrent --quiet &
-	spinner
+	git clone https://github.com/Novik/ruTorrent.git rutorrent --quiet 
 	cd rutorrent/plugins/
-	git clone https://github.com/xombiemp/rutorrentMobile.git mobile --quiet &
-	spinner
+	git clone https://github.com/xombiemp/rutorrentMobile.git mobile --quiet 
 	cd /tmp/
 	
 	echo -e "${BU}Step "$step" complete.${NC}"

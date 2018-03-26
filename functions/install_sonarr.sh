@@ -16,21 +16,16 @@ install_sonarr () {
 		
 	# Install required repos and packages
 	echo -e "${LB}        "$substep")${NC} Installing dependencies" ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
-    yum install epel-release yum-utils -y ${tolog} &
-    spinner
+    yum install epel-release yum-utils -y ${tolog} 
     rpm --import "http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF" 2>&1
-    yum-config-manager --add-repo http://download.mono-project.com/repo/centos/ ${tolog} &
-    spinner
-    yum -y install wget mediainfo libzen libmediainfo curl gettext mono-core mono-devel mono-locale-extras sqlite.x86_64 git par2cmdline p7zip unzip tar gcc python-feedparser python-configobj python-cheetah python-dbus python-devel libxslt-devel ${tolog} &
-    spinner
+    yum-config-manager --add-repo http://download.mono-project.com/repo/centos/ ${tolog} 
+    yum -y install wget mediainfo libzen libmediainfo curl gettext mono-core mono-devel mono-locale-extras sqlite.x86_64 git par2cmdline p7zip unzip tar gcc python-feedparser python-configobj python-cheetah python-dbus python-devel libxslt-devel ${tolog} 
  
     # Download, extract, & move sonarr
 	echo -e "${LB}        "$substep")${NC} Installing Sonarr" ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
     cd /tmp/
-    wget http://download.sonarr.tv/v2/master/mono/NzbDrone.master.tar.gz --quiet &
-    spinner
-    tar -xzf NzbDrone* -C . &
-    spinner
+    wget http://download.sonarr.tv/v2/master/mono/NzbDrone.master.tar.gz --quiet 
+    tar -xzf NzbDrone* -C . 
     mkdir -p /opt/$service_name/bin
     mv NzbDrone/* /opt/$service_name/bin
     rm -rf NzbDrone*

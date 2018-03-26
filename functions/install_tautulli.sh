@@ -15,12 +15,11 @@ install_tautulli () {
 	echo -e "${BU}"$step". Installing Jackett...${NC}"
 	
 	echo -e "${LB}        "$substep")${NC} Installing dependencies" ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
-	yum install -y python ${tolog} & 
+	yum install -y python ${tolog} 
 	spinner
 	
 	echo -e "${LB}        "$substep")${NC} Installing Radarr" ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
-	git clone https://github.com/Tautulli/Tautulli.git --quiet &
-	spinner
+	git clone https://github.com/Tautulli/Tautulli.git --quiet 
 	mv Tautulli/ opt/
 	
     # Add a user for the app to use

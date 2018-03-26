@@ -13,7 +13,7 @@ update_system () {
 	echo -e "${BU}"$step". Updating system...${NC}"
 
 	echo -e "${LB}        "$substep")${NC} Running yum update..." ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
-	yum update -y & >/dev/null 2>&1
+	yum update -y 
 	spinner
 
 	echo -e "${BU}Step "$step" complete.${NC}"
