@@ -39,19 +39,3 @@ update_service () {
     systemctl is-active $service_name ${tolog} || systemctl start $service_name ${tolog}
     systemctl is-active $service_name ${tolog} && { systemctl is-enabled $service_name ${tolog} || systemctl enable $service_name ${tolog} || { echo -e "${RED}ERROR: ${NC}Failed to start and enable the $service_name service. Exiting...";  exit 1; } }
 }
-
-spinner () {
-#    local colour=('\033[0m' '\033[1;31m' '\033[1;36m' '\033[1;33m' '\033[34;4m')
-#    local pid=$!
-#    local delay=0.15
-#    local spinstr="|/-\\"
-#    while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
-#        for i in {1..5}; do
-#	        local temp=${spinstr#?}
-#    	    printf colour[i] " [%c]  " "$spinstr"
-#        	local spinstr=$temp${spinstr%"$temp"}
-#        	sleep $delay
-#        done
-#    done
-#    printf "    \b\b\b\b\b\b"
-}

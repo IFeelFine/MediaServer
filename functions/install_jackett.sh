@@ -20,9 +20,7 @@ install_jackett () {
 	echo -e "${LB}        "$substep")${NC} Installing Jackett" ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
 	cd /tmp/
     curl -L -O $( curl -s https://api.github.com/repos/Jackett/Jackett/releases | grep Mono.tar.gz | grep browser_download_url | head -1 | cut -d \" -f 4 ) ${tolog} &
-    spinner
-    tar -xf Jackett* & 
-    spinner
+    tar -xf Jackett* 
 	mkdir -p /opt/$service_name
 	mv Jackett/* /opt/$service_name
 	rm -rf Jackett*
