@@ -46,16 +46,12 @@ spinner () {
     local delay=0.15
     local spinstr="|/-\\"
     while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
-        for i in {1..8}; do
-	        for j in {1..4}; do
-	        	local temp=${spinstr#?}
-    	    	printf colour[i] " [%c]  " "$spinstr"
-        		local spinstr=$temp${spinstr%"$temp"}
-        		sleep $delay
-        		for k in {1..80}; do printf "\b"; done
-	        	local temp=${spinstr#?}
-        		sleep $delay
-        		for k in {1..80}; do printf "\b"; done
+        for i in {1..5}; do
+	        local temp=${spinstr#?}
+    	    printf colour[i] " [%c]  " "$spinstr"
+        	local spinstr=$temp${spinstr%"$temp"}
+        	sleep $delay
+        done
     done
     printf "    \b\b\b\b\b\b"
 }
