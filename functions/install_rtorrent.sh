@@ -7,43 +7,35 @@
 # Date			: 3/24/2018
 # Notes			: 
 #====================================================================
-# Set colours & other vars
-RED='\033[1;31m'	# Bold red
-LB='\033[1;36m'		# Bold blue
-DB='\033[36m'		# Dark blue
-YB='\033[1;33m'		# Bold yellow
-BU='\033[34;4m'		# Purple underline
-LG='\033[37m'		# Light gray
-LU='\033[37;1;4m'	# Light gray underlined
-NC='\033[0m'		# No Color
 
 install_rtorrent_rutorrent () {
 	step=$((step+1)); substep=a
 
-	echo "${BU}"$step". Installing rTorrent...${NC}"
+	echo -e "${BU}"$step". Installing rTorrent...${NC}"
 	cd /tmp/
 
     # Install PHP 7.2
-	echo "${LB}        "$substep")${NC} Installing dependencies" ; substep="$(echo $substep | tr '[a-y]z' '[b-z]a')"
+	echo -e "${LB}        "$substep")${NC} Installing dependencies" ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
     wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm --quiet
     wget http://rpms.remirepo.net/enterprise/remi-release-7.rpm --quiet
     rpm -Uvh remi-release-7.rpm epel-release-latest-7.noarch.rpm --quiet
 
-    yum install -y yum-utils & >/dev/null 2>&1 
+    yum install -y yum-utils ${tolog} &
     spinner
-    yum-config-manager --enable remi-php72 & >/dev/null 2>&1
+    yum-config-manager --enable remi-php72 ${tolog} &
     spinner
 	
 	#Install required packages
-	echo "${LB}        "$substep")${NC} Installing rTorrent" ; substep="$(echo $substep | tr '[a-y]z' '[b-z]a')"
-	rpm -Uvh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm 2>&1
+	echo -e "${LB}        "$substep")${NC} Installing rTorrent" ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
+	rpm -Uvh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm ${tolog} &
+	spinner
 
-	yum install -y libtool screen nginx php php-fpm php-cli php-curl php-geoip php-xmlrpc mediainfo rtorrent >/dev/null 2>&1 
+	yum install -y libtool screen nginx php php-fpm php-cli php-curl php-geoip php-xmlrpc mediainfo rtorrent ${tolog} &
 	spinner
  
 	[ -d "/var/www/html/" ] && cd /var/www/html/ || { mkdir -p /var/www/html/; cd /var/www/html; }
 	
-	echo "${LB}        "$substep")${NC} Installing ruTorrent" ; substep="$(echo $substep | tr '[a-y]z' '[b-z]a')"
+	echo -e "${LB}        "$substep")${NC} Installing ruTorrent" ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
 	git clone https://github.com/Novik/ruTorrent.git rutorrent --quiet &
 	spinner
 	cd rutorrent/plugins/
@@ -51,13 +43,13 @@ install_rtorrent_rutorrent () {
 	spinner
 	cd /tmp/
 	
-	echo "${BU}Step "$step" complete.${NC}"
-	echo ""
+	echo -e "${BU}Step "$step" complete.${NC}"
+	echo -e ""
 }
 
 configure_nginx_rutorrent () {
 	step=$((step+1)); substep=a
-	echo "${BU}"$step". Configuring Nginx and downloading server block for ruTorrent...${NC}"
+	echo -e "${BU}"$step". Configuring Nginx and downloading server block for ruTorrent...${NC}"
 		
     mkdir /etc/nginx/sites-available /etc/nginx/sites-enabled	
 	mv nginx.conf nginx.conf.default
@@ -65,9 +57,9 @@ configure_nginx_rutorrent () {
     
 	wget https://raw.githubusercontent.com/IFeelFine/MediaServer/master/config/nginx/sites-available/rutorrent.conf --quiet -P /etc/nginx/sites-available/
 	
-	echo "${YB}ruTorrent user information${NC}"	
+	echo -e "${YB}ruTorrent user information${NC}"	
 	read -t 10 -p "What will be the username to access to ruTorrent? [rutorrent]" rutorrent_user_temp
-	[ -z "$rutorrent_user_temp" ] && rutorrent_user="rutorrent"	|| rutorrent_user=$(echo "$rutorrent_user_temp" | tr -s '[:upper:]' '[:lower:]')		
+	[ -z "$rutorrent_user_temp" ] && rutorrent_user="rutorrent"	|| rutorrent_user=$(echo -e "$rutorrent_user_temp" | tr -s '[:upper:]' '[:lower:]')		
 	read -t 10 -p "What will be $rutorrent_user_temp's password? [rutorrent]" rutorrent_password
 	[ -z "$rutorrent_password" ] && rutorrent_password="rutorrent"
 	
@@ -76,22 +68,22 @@ configure_nginx_rutorrent () {
 	htpasswd -b -c /var/www/html/rutorrent/.htpasswd $rutorrent_user $rutorrent_password >/dev/null 2>&1
 	chmod 400 /var/www/html/rutorrent/.htpasswd
 				
-	echo "${LB}        "$substep")${NC} Starting the service" ; substep="$(echo $substep | tr '[a-y]z' '[b-z]a')"
-	systemctl restart nginx && systemctl is-enabled $service_name || systemctl enable nginx
-	systemctl restart php-fpm && systemctl is-enabled $service_name || systemctl enable php-fpm
+	echo -e "${LB}        "$substep")${NC} Starting the service" ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
+	systemctl restart nginx ${tolog} && systemctl is-enabled $service_name ${tolog} || systemctl enable nginx ${tolog}
+	systemctl restart php-fpm ${tolog} && systemctl is-enabled $service_name ${tolog} || systemctl enable php-fpm ${tolog}
 		
-	echo "${BU}Step "$step" complete.${NC}"
-	echo ""
+	echo -e "${BU}Step "$step" complete.${NC}"
+	echo -e ""
 }
 	
 configure_user_rtorrent_rutorrent () {
 	step=$((step+1)); substep=a
-	echo "${BU}"$step". Configuring "$rutorrent_user" user for rTorrent and ruTorrent...${NC}"
+	echo -e "${BU}"$step". Configuring "$rutorrent_user" user for rTorrent and ruTorrent...${NC}"
 		
 	useradd $rutorrent_user
 	[ -d "/home/$rutorrent_user/" ] || mkdir -p /home/$rutorrent_user/
 	mkdir /home/$rutorrent_user/torrents /home/$rutorrent_user/watch /home/$rutorrent_user/.session
-	tee /home/$rutorrent_user/.rtorrent.rc 2>&1 >/dev/null << EOF 
+	tee /home/$rutorrent_user/.rtorrent.rc ${tolog} << EOF 
 scgi_port = 127.0.0.1:5001
 encoding_list = UTF-8
 port_range = 45000-65000
@@ -114,10 +106,10 @@ execute = {sh,-c,/usr/bin/php /var/www/html/rutorrent/php/initplugins.php $rutor
 schedule = espace_disque_insuffisant,1,30,close_low_diskspace=10240M" 
 EOF
 
-	chown -R $rutorrent_user: /home/$rutorrent_user/
+	chown -R $rutorrent_user: /home/$rutorrent_user/ ${tolog}
 			
 	mkdir /var/www/html/rutorrent/conf/users/$rutorrent_user/ 
-	tee /var/www/html/rutorrent/conf/users/$rutorrent_user/config.php 2>&1 >/dev/null << EOF 
+	tee /var/www/html/rutorrent/conf/users/$rutorrent_user/config.php ${tolog} << EOF 
 <?php
 \$pathToExternals['curl'] = '/usr/bin/curl';
 \$topDirectory = '/home/$rutorrent_user';
@@ -126,19 +118,19 @@ EOF
 \$XMLRPCMountPoint = '/$rutorrent_user';" >
 EOF
 		
-	echo "${LB}        "$substep")${NC} Starting the service" ; substep="$(echo $substep | tr '[a-y]z' '[b-z]a')"
+	echo -e "${LB}        "$substep")${NC} Starting the service" ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
 	systemctl restart nginx
 		
-	echo "${BU}Step "$step" complete.${NC}"
-	echo ""
+	echo -e "${BU}Step "$step" complete.${NC}"
+	echo -e ""
 }
 
 configure_rtorrent_service () {
 	step=$((step+1)); substep=a
-	echo "${BU}"$step". Configuring rTorrent service..."
+	echo -e "${BU}"$step". Configuring rTorrent service..."
 
-	echo "${LB}        "$substep")${NC} Starting the service" ; substep="$(echo $substep | tr '[a-y]z' '[b-z]a')"
-    tee /usr/lib/systemd/system/rtorrent.service 2>&1 >/dev/null << EOF
+	echo -e "${LB}        "$substep")${NC} Starting the service" ; substep="$(echo -e $substep | tr '[a-y]z' '[b-z]a')"
+    tee /usr/lib/systemd/system/rtorrent.service ${tolog} << EOF
 [Unit]
 Description=rTorrent Service
 After=network.target
@@ -157,9 +149,9 @@ WantedBy=multi-user.target
 EOF
     
 	# Enable and start the Service
-    systemctl is-active $service_name || systemctl start $service_name
-    systemctl is-active $service_name && { systemctl is-enabled $service_name || systemctl enable $service_name || { echo "Failed to start and enable the $service_name service. Exiting...";  exit 1; } }
+    systemctl is-active $service_name ${tolog} || systemctl start $service_name ${tolog}
+    systemctl is-active $service_name ${tolog} && { systemctl is-enabled $service_name ${tolog} || systemctl enable $service_name ${tolog} || { echo -e "${RED}ERROR: ${NC}Failed to start and enable the $service_name service. Exiting...";  exit 1; } }
 
-	echo "${BU}Step "$step" complete.${NC}"
-	echo ""
+	echo -e "${BU}Step "$step" complete.${NC}"
+	echo -e ""
 }
