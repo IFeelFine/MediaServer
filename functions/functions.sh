@@ -31,6 +31,7 @@ fi
 
 update_firewall () {    
     systemctl is-active firewalld || systemctl start firewalld
+    firewall-cmd --permanent --get-services
     firewall-cmd --permanent --add-service $service_name 
     firewall-cmd --reload
 }
